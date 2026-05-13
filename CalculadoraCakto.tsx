@@ -337,11 +337,6 @@ export default function CalculadoraCakto() {
             <div className="result-value big">+ {brl(extra)}</div>
             <div className="result-sub">de margem nova pelo repasse da taxa adicional configurada.</div>
           </div>
-
-          <button type="button" className="cta-activate">
-            Ativar agora
-            <span className="arrow">→</span>
-          </button>
         </div>
       </div>
     </>
