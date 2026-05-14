@@ -82,6 +82,58 @@
       font-size: 14px; color: var(--text-dim); margin-bottom: 22px; line-height: 1.5;
     }
 
+    /* Step 0 — Intro / Lead magnet */
+    .intro-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 999px;
+      background: var(--green-tint); color: var(--green-dim);
+      font-size: 12px; font-weight: 700; letter-spacing: 0.2px;
+      margin-bottom: 16px;
+    }
+    .intro-pill .dot {
+      width: 6px; height: 6px; border-radius: 999px; background: var(--green);
+    }
+    .intro-title {
+      font-size: 28px; font-weight: 800; color: var(--text);
+      letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 12px;
+    }
+    .intro-title .accent { color: var(--green); }
+    .intro-description {
+      font-size: 15px; color: var(--text-dim); line-height: 1.55;
+      margin-bottom: 22px;
+    }
+    .intro-benefits-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.3px;
+      color: var(--text-dim); text-transform: uppercase; margin-bottom: 12px;
+    }
+    .intro-benefits {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-bottom: 24px;
+    }
+    .intro-benefit {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; background: var(--surface-2);
+      border: 1px solid var(--border); border-radius: 12px;
+    }
+    .intro-benefit-icon {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--green-tint); color: var(--green-dim);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .intro-benefit-text {
+      font-size: 14px; color: var(--text); line-height: 1.4;
+    }
+    .intro-benefit-text strong { color: var(--text); font-weight: 700; }
+    .intro-trust {
+      font-size: 13px; color: var(--text-mute); text-align: center;
+      margin-top: 14px; line-height: 1.5;
+    }
+    @media (max-width: 560px) {
+      .intro-title { font-size: 24px; }
+      .intro-description { font-size: 14px; }
+    }
+
     .field { margin-bottom: 16px; }
     .field label {
       display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.3px;
@@ -467,7 +519,7 @@
 
     function Calculadora() {
       // Step state
-      const [step, setStep] = useState(1);
+      const [step, setStep] = useState(0);
 
       // Form fields
       const [nome, setNome] = useState('');
@@ -633,15 +685,80 @@
               </div>
               <span className="header-title">Simule seu ganho</span>
             </div>
-            <div className="progress" aria-label={`Passo ${step} de 3`}>
-              {[1, 2, 3].map((n) => (
-                <span
-                  key={n}
-                  className={`progress-dot ${step === n ? 'active' : step > n ? 'done' : ''}`}
-                />
-              ))}
-            </div>
+            {step >= 1 && step <= 3 && (
+              <div className="progress" aria-label={`Passo ${step} de 3`}>
+                {[1, 2, 3].map((n) => (
+                  <span
+                    key={n}
+                    className={`progress-dot ${step === n ? 'active' : step > n ? 'done' : ''}`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
+
+          {step === 0 && (
+            <div className="step">
+              <span className="intro-pill">
+                <span className="dot"></span>
+                Cálculo grátis · 60 segundos
+              </span>
+              <h2 className="intro-title">
+                Quanto disso volta <span className="accent">pro seu bolso?</span>
+              </h2>
+              <p className="intro-description">
+                A maioria dos produtores vê parte do dinheiro virar juros da operadora. Com a Cakto, essa margem volta pra você. Vamos calcular o quanto?
+              </p>
+
+              <div className="intro-benefits-label">O que você leva na Cakto</div>
+              <div className="intro-benefits">
+                <div className="intro-benefit">
+                  <span className="intro-benefit-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </span>
+                  <span className="intro-benefit-text">
+                    Taxa a partir de <strong>1,99% no cartão</strong>
+                  </span>
+                </div>
+                <div className="intro-benefit">
+                  <span className="intro-benefit-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </span>
+                  <span className="intro-benefit-text">
+                    Gerente de contas <strong>exclusivo 24/7</strong>
+                  </span>
+                </div>
+                <div className="intro-benefit">
+                  <span className="intro-benefit-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </span>
+                  <span className="intro-benefit-text">
+                    <strong>Migração assistida</strong> sem perder uma venda
+                  </span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                className="cta-primary"
+                onClick={() => {
+                  startedAtRef.current = Date.now();
+                  lastStepAtRef.current = Date.now();
+                  setStep(1);
+                }}
+              >
+                Calcular meu ganho
+                <span className="arrow">→</span>
+              </button>
+              <p className="intro-trust">Leva menos de 1 minuto. Sem compromisso.</p>
+            </div>
+          )}
 
           {step === 1 && (
             <div className="step">
